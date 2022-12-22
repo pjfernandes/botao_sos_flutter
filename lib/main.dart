@@ -21,6 +21,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> _messages = [];
   Future<http.Response> _postEvent() async {
     final data = {
       "event": {"iduff": "iduff"}
@@ -32,6 +33,10 @@ class _MyHomePageState extends State<MyHomePage> {
       },
       body: jsonEncode(data),
     );
+
+    setState(() {
+      _messages.add("Alerta gerado!");
+    });
     return response;
   }
 
@@ -39,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).errorColor,
+        backgroundColor: Colors.blueGrey,
         title: Text("Botão SOS"),
       ),
       body: Center(
@@ -69,7 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Colors.red; // <-- Splash color
                 }),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(_messages.length == 0 ? "" : _messages.last),
+            ),
           ],
         ),
       ),
